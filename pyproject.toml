@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "customercounter"
+version = "0.1.0"
+description = "A Python program to count the number of customers in a mall using probe requests!"
+authors = ["0xHexPloit <78966024+0xHexPloit@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.12"
+loguru = "^0.7.0"
+scapy = "^2.5.0"
+typer = {extras = ["all"], version = "^0.9.0"}
+python-statemachine = "^2.0.0"
+confz = "^1.8.1"
+
+
+[tool.poetry.group.dev.dependencies]
+isort = "^5.12.0"
+black = "^23.3.0"
+pytest = "^7.3.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

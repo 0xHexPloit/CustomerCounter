@@ -1,0 +1,2 @@
+state_machine:
+    attempts_in_potential_leaving: 3
