@@ -45,6 +45,15 @@ class IElectronicDevicePresenceMachine(typing.Protocol):
     def get_remaining_potential_leaving_attempts(self) -> int:
         ...
 
+    def probe_request_received(self):
+        ...
+
+    def no_probe_request_received(self):
+        ...
+
+    def get_current_state(self) -> ElectronicDevicePresenceMachineState:
+        ...
+
 
 class ElectronicDevicePresenceMachine(StateMachine):
     potential_arrival = State(initial=True)
@@ -117,3 +126,8 @@ class ElectronicDevicePresenceMachine(StateMachine):
 
     def get_remaining_potential_leaving_attempts(self) -> int:
         return self.__number_attempts_in_potential_leaving
+
+    def get_current_state(self) -> ElectronicDevicePresenceMachineState:
+        return ElectronicDevicePresenceMachineState.parse_from_raw(
+            self.current_state.id
+        )

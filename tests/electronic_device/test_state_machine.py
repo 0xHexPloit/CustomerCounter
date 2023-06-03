@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from customercounter.electronic_device.state_machine import (
     ElectronicDevicePresenceMachine,
 )

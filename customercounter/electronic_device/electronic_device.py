@@ -1,3 +1,4 @@
+import typing
 from abc import ABC, abstractmethod
 from datetime import datetime
 
@@ -6,6 +7,7 @@ from loguru import logger
 from customercounter.electronic_device.state_machine import (
     ElectronicDevicePresenceMachine,
     ElectronicDevicePresenceMachineState,
+    IElectronicDevicePresenceMachine,
 )
 from customercounter.event.type import EventType
 
@@ -27,12 +29,22 @@ class IElectronicDevice(ABC):
     def update_device_state(self, event_type: EventType):
         raise NotImplementedError()
 
+    @abstractmethod
+    def get_in_mall_timestamps(self) -> typing.List[datetime]:
+        raise NotImplementedError()
+
+    @abstractmethod
+    def get_left_timestamps(self) -> typing.List[datetime]:
+        raise NotImplementedError()
+
 
 class ElectronicDevice(IElectronicDevice):
     def __init__(self, device_id: str, vendor: str):
         self.__id = device_id
         self.__vendor = vendor
-        self.__state = ElectronicDevicePresenceMachine.build_default_machine()
+        self.__state: IElectronicDevicePresenceMachine = (
+            ElectronicDevicePresenceMachine.build_default_machine()
+        )
 
     def get_id(self) -> str:
         return self.__id
@@ -41,9 +53,7 @@ class ElectronicDevice(IElectronicDevice):
         return self.__vendor
 
     def get_current_state(self) -> ElectronicDevicePresenceMachineState:
-        return ElectronicDevicePresenceMachineState.parse_from_raw(
-            self.__state.current_state.id
-        )
+        return self.__state.get_current_state()
 
     def update_device_state(self, event_type: EventType):
         old_state = self.get_current_state()
@@ -67,3 +77,9 @@ class ElectronicDevice(IElectronicDevice):
         logger.info(
             f"{self.__id} | {self.__vendor} | {old_state.value} --> {new_state.value} | {current_timestamp}"
         )
+
+    def get_in_mall_timestamps(self) -> typing.List[datetime]:
+        return self.__state.get_in_mall_timestamps()
+
+    def get_left_timestamps(self) -> typing.List[datetime]:
+        return self.__state.get_left_timestamps()
