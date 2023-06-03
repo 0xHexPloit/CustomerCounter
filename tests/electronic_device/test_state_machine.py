@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from customercounter.electronic_device.state_machine import (
     ElectronicDevicePresenceMachine,
 )
@@ -138,3 +140,21 @@ def test_should_stay_in_false_positive_when_receiving_no_probe_request():
     machine.no_probe_request_received()
 
     assert machine.current_state.id == "false_positive"
+
+
+def test_should_add_timestamp_when_moving_from_potential_arrival_to_in_mall():
+    machine = ElectronicDevicePresenceMachine.build_default_machine()
+    machine.probe_request_received()
+    timestamps = machine.get_in_mall_timestamps()
+
+    assert len(timestamps) == 1
+
+
+def test_should_add_timestamp_when_moving_from_potential_leaving_to_left():
+    machine = ElectronicDevicePresenceMachine(0)
+    machine.probe_request_received()
+    machine.no_probe_request_received()
+    machine.no_probe_request_received()
+    timestamps = machine.get_left_timestamps()
+
+    assert len(timestamps) == 1
