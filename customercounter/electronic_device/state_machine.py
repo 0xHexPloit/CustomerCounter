@@ -1,6 +1,35 @@
+from enum import Enum
+
 from statemachine import State, StateMachine
 
 from customercounter.settings import get_app_settings
+
+
+class ElectronicDevicePresenceMachineState(Enum):
+    POTENTIAL_ARRIVAL = "POTENTIAL_ARRIVAL"
+    IN_MALL = "IN_MALL"
+    FALSE_POSITIVE = "FALSE_POSITIVE"
+    POTENTIAL_LEAVING = "POTENTIAL_LEAVING"
+    LEFT = "LEFT"
+
+    @staticmethod
+    def parse_from_raw(value: str) -> "ElectronicDevicePresenceMachineState":
+        upper_value = value.upper()
+
+        if upper_value == ElectronicDevicePresenceMachineState.POTENTIAL_ARRIVAL.value:
+            return ElectronicDevicePresenceMachineState.POTENTIAL_ARRIVAL
+        elif upper_value == ElectronicDevicePresenceMachineState.IN_MALL.value:
+            return ElectronicDevicePresenceMachineState.IN_MALL
+        elif upper_value == ElectronicDevicePresenceMachineState.FALSE_POSITIVE.value:
+            return ElectronicDevicePresenceMachineState.FALSE_POSITIVE
+        elif (
+            upper_value == ElectronicDevicePresenceMachineState.POTENTIAL_LEAVING.value
+        ):
+            return ElectronicDevicePresenceMachineState.POTENTIAL_LEAVING
+        elif upper_value == ElectronicDevicePresenceMachineState.LEFT.value:
+            return ElectronicDevicePresenceMachineState.LEFT
+        else:
+            raise ValueError("Invalid entry for ElectronicDevicePresenceMachineState!")
 
 
 class ElectronicDevicePresenceMachine(StateMachine):

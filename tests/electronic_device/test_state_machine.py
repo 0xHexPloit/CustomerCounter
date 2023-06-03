@@ -1,5 +1,6 @@
-from customercounter.electronic_device.state_machine import \
-    ElectronicDevicePresenceMachine
+from customercounter.electronic_device.state_machine import (
+    ElectronicDevicePresenceMachine,
+)
 from customercounter.settings import get_app_settings
 
 
