@@ -1,3 +1,4 @@
+# mypy: disable-error-code="misc"
 from pathlib import Path
 
 from confz import ConfZ, ConfZFileSource
