@@ -8,6 +8,7 @@ from customercounter.electronic_device.state_machine import (
     ElectronicDevicePresenceMachineState,
 )
 from customercounter.event.type import EventType
+from customercounter.settings import get_app_settings
 
 DEFAULT_DEVICE_ID: str = "A5-26-DC"
 DEFAULT_VENDOR: str = "Apple"
@@ -92,3 +93,25 @@ def test_should_not_log_state_transition_if_staying_in_same_state():
     assert len(logs) == 1
 
     logger.remove(handle_id)
+
+
+def test_should_get_a_timestamp_when_moving_from_potential_arrival_to_in_mall():
+    device = ElectronicDevice("", "")
+    device.update_device_state(EventType.PROBE_REQUEST_RECEIVED)
+    timestamps = device.get_in_mall_timestamps()
+
+    assert len(timestamps) == 1
+
+
+def test_should_get_a_timestamp_when_moving_from_potential_leaving_to_left():
+    device = ElectronicDevice("", "")
+    device.update_device_state(EventType.PROBE_REQUEST_RECEIVED)
+
+    settings = get_app_settings()
+
+    for i in range(settings.state_machine.attempts_in_potential_leaving + 2):
+        device.update_device_state(EventType.NO_PROBE_REQUEST_RECEIVED)
+
+    timestamps = device.get_left_timestamps()
+
+    assert len(timestamps) == 1
