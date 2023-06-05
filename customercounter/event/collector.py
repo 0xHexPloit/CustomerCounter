@@ -1,21 +1,15 @@
 import threading
 import time
 import typing
-from abc import ABC, abstractmethod
 from typing import Any
 
 from customercounter.event.pool import IEventPool
 from customercounter.event.transmitter import IEventTransmitter
+from customercounter.thread import IThreadManager
 
 
-class IEventCollector(ABC):
-    @abstractmethod
-    def spawn(self):
-        raise NotImplementedError()
-
-    @abstractmethod
-    def terminate(self):
-        raise NotImplementedError()
+class IEventCollector(IThreadManager):
+    ...
 
 
 def thread_func(
@@ -55,3 +49,6 @@ class EventCollector(IEventCollector):
 
     def terminate(self):
         self.__should_exit = True
+
+    def get_thread(self) -> typing.Optional[threading.Thread]:
+        return self.__thread

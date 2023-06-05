@@ -4,6 +4,22 @@ from abc import ABC, abstractmethod
 from customercounter.electronic_device.electronic_device import IElectronicDevice
 
 
+class IElectronicDevicesStoreUpdateSubscriber(ABC):
+    @abstractmethod
+    def handle_store_update(self):
+        raise NotImplementedError()
+
+
+class IElectronicDevicesStoreUpdateNotifier(ABC):
+    @abstractmethod
+    def notify_store_update(self):
+        raise NotImplementedError()
+
+    @abstractmethod
+    def add_subscriber(self, subscriber: IElectronicDevicesStoreUpdateSubscriber):
+        raise NotImplementedError()
+
+
 class IElectronicDevicesStore(ABC):
     @abstractmethod
     def get_electronic_devices(self) -> typing.List[IElectronicDevice]:
