@@ -64,9 +64,7 @@ def test_should_decrement_number_attempts_when_receiving_no_probe_request_on_pot
 
     remaining_attempts = machine.get_remaining_potential_leaving_attempts()
 
-    assert (
-        remaining_attempts == settings.state_machine.attempts_in_potential_leaving - 1
-    )
+    assert remaining_attempts == settings.smachine.plattempts - 1
 
 
 def test_should_move_from_left_to_potential_arrival_when_receiving_probe_request():
@@ -97,7 +95,7 @@ def test_should_reset_remaining_potential_leaving_attempts_when_moving_from_pote
     settings = get_app_settings()
     remaining_attempts = machine.get_remaining_potential_leaving_attempts()
 
-    assert remaining_attempts == settings.state_machine.attempts_in_potential_leaving
+    assert remaining_attempts == settings.smachine.plattempts
 
 
 def test_should_reset_remaining_potential_leaving_attemps_when_moving_from_left_to_potential_arrival():
@@ -108,10 +106,9 @@ def test_should_reset_remaining_potential_leaving_attemps_when_moving_from_left_
     machine.no_probe_request_received()
     machine.probe_request_received()
 
-    settings = get_app_settings()
-    remaining_attemps = machine.get_remaining_potential_leaving_attempts()
+    remaining_attempts = machine.get_remaining_potential_leaving_attempts()
 
-    assert remaining_attemps == number_attempts_allowed
+    assert remaining_attempts == number_attempts_allowed
 
 
 def test_should_stay_in_mall_when_receiving_probe_request():

@@ -12,6 +12,7 @@ scapy = "^2.5.0"
 typer = {extras = ["all"], version = "^0.9.0"}
 python-statemachine = "^2.0.0"
 confz = "^1.8.1"
+pytermgui = "^7.4.0"
 
 
 [tool.poetry.group.dev.dependencies]

@@ -469,6 +469,24 @@ files = [
 plugins = ["importlib-metadata"]
 
 [[package]]
+name = "pytermgui"
+version = "7.4.0"
+description = "Python TUI framework with mouse support, modular widget system, customizable and rapid terminal markup language and more!"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "pytermgui-7.4.0-py3-none-any.whl", hash = "sha256:a162dbc58199644693bbc9d44d23ac124a684e17563a1589713ae55dd9bf0342"},
+    {file = "pytermgui-7.4.0.tar.gz", hash = "sha256:b1bda86c95084a9de117fc926beb249f79241bdb05ea51bce884c76292885c61"},
+]
+
+[package.dependencies]
+typing-extensions = "*"
+
+[package.extras]
+yaml = ["pyyaml"]
+
+[[package]]
 name = "pytest"
 version = "7.3.1"
 description = "pytest: simple powerful testing with Python"
@@ -732,4 +750,4 @@ dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "619381185c2136da9a3c8ba376be4e34006f5581d3e1446c5d323a662bd1f539"
+content-hash = "cce56ee685745f1e5aee9fd359c9b233d0d99a0433fef2974daa7114532b0c3d"
