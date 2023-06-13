@@ -1,2 +1,4 @@
-state_machine:
-    attempts_in_potential_leaving: 3
+smachine:
+    plattempts: 49
+collector:
+    interval: 120

@@ -97,9 +97,7 @@ class ElectronicDevicePresenceMachine(StateMachine):
     @staticmethod
     def build_default_machine() -> "ElectronicDevicePresenceMachine":
         settings = get_app_settings()
-        return ElectronicDevicePresenceMachine(
-            settings.state_machine.attempts_in_potential_leaving
-        )
+        return ElectronicDevicePresenceMachine(settings.smachine.plattempts)
 
     def _potential_leaving_attempts_still_positive(self):
         should_move_to_left_state = self.__number_attempts_in_potential_leaving != 0

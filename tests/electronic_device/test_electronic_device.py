@@ -109,7 +109,7 @@ def test_should_get_a_timestamp_when_moving_from_potential_leaving_to_left():
 
     settings = get_app_settings()
 
-    for i in range(settings.state_machine.attempts_in_potential_leaving + 2):
+    for i in range(settings.smachine.plattempts + 2):
         device.update_device_state(EventType.NO_PROBE_REQUEST_RECEIVED)
 
     timestamps = device.get_left_timestamps()

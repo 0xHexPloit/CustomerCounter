@@ -1,24 +1,38 @@
 # mypy: disable-error-code="misc"
 from pathlib import Path
 
-from confz import ConfZ, ConfZFileSource
+from confz import ConfZ, ConfZEnvSource, ConfZFileSource
 from pydantic import validator
 
 
 class StateMachineSettings(ConfZ):
-    attempts_in_potential_leaving: int
+    plattempts: int
 
-    @validator("attempts_in_potential_leaving")
+    @validator("plattempts")
     def check_number_attempts_is_positive(cls, v):
         if v < 0:
             raise ValueError("Number of attempts should be positive")
         return v
 
 
-class AppSettings(ConfZ):
-    state_machine: StateMachineSettings
+class EventsCollectorSettings(ConfZ):
+    interval: int
 
-    CONFIG_SOURCES = ConfZFileSource(file=Path(__file__).parent.parent / "config.yaml")
+    @validator("interval")
+    def check_collect_time_interval_is_positive(cls, v):
+        if v < 0:
+            raise ValueError("Collect time interval should be positive")
+        return v
+
+
+class AppSettings(ConfZ):
+    smachine: StateMachineSettings
+    collector: EventsCollectorSettings
+
+    CONFIG_SOURCES = [
+        ConfZFileSource(file=Path(__file__).parent.parent / "config.yaml"),
+        ConfZEnvSource(prefix="CCOUNTER_", allow_all=True, nested_separator="_"),
+    ]
 
 
 def get_app_settings() -> AppSettings:
