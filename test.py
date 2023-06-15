@@ -3,7 +3,7 @@ import time
 from multiprocessing import Lock
 from typing import List
 
-from customercounter.event import Event
+from customercounter.event.event import Event
 from customercounter.event.receiver import IEventReceiver
 from customercounter.tui import CustomerCounterTUI
 from customercounter.electronic_device.store import ElectronicDevicesStore
@@ -33,9 +33,9 @@ class FakeEventReceiver(IEventReceiver):
 
 if __name__ == "__main__":
     events = [
-        Event("22-13-28", OperatingSystem.APPLE),
-        Event("24-27-23", OperatingSystem.ANDROID),
-        Event("2E-A1-4F", OperatingSystem.OTHER)
+        Event(device_id="22-13-28", os=OperatingSystem.APPLE),
+        Event(device_id="24-27-23", os=OperatingSystem.ANDROID),
+        Event(device_id="2E-A1-4F", os=OperatingSystem.OTHER)
     ]
     import loguru
 
