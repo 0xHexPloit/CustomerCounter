@@ -8,26 +8,27 @@ from customercounter.electronic_device.state_machine import (
     ElectronicDevicePresenceMachineState,
 )
 from customercounter.event.type import EventType
+from customercounter.operating_system import OperatingSystem
 from customercounter.settings import get_app_settings
 
 DEFAULT_DEVICE_ID: str = "A5-26-DC"
-DEFAULT_VENDOR: str = "Apple"
+DEFAULT_OS = OperatingSystem.APPLE
 
 
 def test_should_get_correct_id():
-    device = ElectronicDevice(DEFAULT_DEVICE_ID, "")
+    device = ElectronicDevice(DEFAULT_DEVICE_ID, DEFAULT_OS)
 
     assert device.get_id() == DEFAULT_DEVICE_ID
 
 
 def test_should_get_correct_vendor_name():
-    device = ElectronicDevice("", DEFAULT_VENDOR)
+    device = ElectronicDevice("", DEFAULT_OS)
 
-    assert device.get_vendor() == DEFAULT_VENDOR
+    assert device.get_os() == DEFAULT_OS
 
 
 def test_should_get_correct_initial_state():
-    device = ElectronicDevice("", "")
+    device = ElectronicDevice("", DEFAULT_OS)
     assert (
         device.get_current_state()
         == ElectronicDevicePresenceMachineState.POTENTIAL_ARRIVAL
@@ -35,7 +36,7 @@ def test_should_get_correct_initial_state():
 
 
 def test_should_move_to_in_mall_state_when_dealing_with_received_probe_request_event():
-    device = ElectronicDevice("", "")
+    device = ElectronicDevice("", DEFAULT_OS)
     device.update_device_state(EventType.PROBE_REQUEST_RECEIVED)
     new_state = device.get_current_state()
 
@@ -43,7 +44,7 @@ def test_should_move_to_in_mall_state_when_dealing_with_received_probe_request_e
 
 
 def test_should_move_to_false_positive_when_dealing_with_no_probe_request_received_event():
-    device = ElectronicDevice("", "")
+    device = ElectronicDevice("", DEFAULT_OS)
     device.update_device_state(EventType.NO_PROBE_REQUEST_RECEIVED)
     new_state = device.get_current_state()
 
@@ -54,7 +55,7 @@ def test_should_log_state_transition_when_moving_from_one_state_to_another():
     buffer = StringIO()
     handle_id = logger.add(buffer)
 
-    device = ElectronicDevice(DEFAULT_DEVICE_ID, DEFAULT_VENDOR)
+    device = ElectronicDevice(DEFAULT_DEVICE_ID, DEFAULT_OS)
     device.update_device_state(EventType.PROBE_REQUEST_RECEIVED)
 
     log = buffer.getvalue().strip("\n")
@@ -64,7 +65,7 @@ def test_should_log_state_transition_when_moving_from_one_state_to_another():
     assert len(log_items) == 4
 
     assert log_items[0].split(" - ")[1].strip() == DEFAULT_DEVICE_ID
-    assert log_items[1].strip() == DEFAULT_VENDOR
+    assert log_items[1].strip() == DEFAULT_OS.value
 
     # Retrieving machine states
     states = log_items[2].split("-->")
@@ -84,7 +85,7 @@ def test_should_not_log_state_transition_if_staying_in_same_state():
     buffer = StringIO()
     handle_id = logger.add(buffer)
 
-    device = ElectronicDevice("", "")
+    device = ElectronicDevice("", OperatingSystem.OTHER)
     device.update_device_state(EventType.PROBE_REQUEST_RECEIVED)
     device.update_device_state(EventType.PROBE_REQUEST_RECEIVED)
 
@@ -96,7 +97,7 @@ def test_should_not_log_state_transition_if_staying_in_same_state():
 
 
 def test_should_get_a_timestamp_when_moving_from_potential_arrival_to_in_mall():
-    device = ElectronicDevice("", "")
+    device = ElectronicDevice("", OperatingSystem.OTHER)
     device.update_device_state(EventType.PROBE_REQUEST_RECEIVED)
     timestamps = device.get_in_mall_timestamps()
 
@@ -104,7 +105,7 @@ def test_should_get_a_timestamp_when_moving_from_potential_arrival_to_in_mall():
 
 
 def test_should_get_a_timestamp_when_moving_from_potential_leaving_to_left():
-    device = ElectronicDevice("", "")
+    device = ElectronicDevice("", OperatingSystem.OTHER)
     device.update_device_state(EventType.PROBE_REQUEST_RECEIVED)
 
     settings = get_app_settings()

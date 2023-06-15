@@ -1,11 +1,11 @@
 import typing
 from abc import ABC, abstractmethod
+from typing import Protocol
 
 from customercounter.electronic_device.electronic_device import IElectronicDevice
 
 
-class IElectronicDevicesStoreUpdateSubscriber(ABC):
-    @abstractmethod
+class IElectronicDevicesStoreUpdateSubscriber(Protocol):
     def handle_store_update(self):
         raise NotImplementedError()
 

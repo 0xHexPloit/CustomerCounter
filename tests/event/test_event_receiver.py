@@ -12,4 +12,4 @@ def test_should_get_events_from_pipe(event: Event):
 
     assert len(received_events) == 1
     assert received_events[0].device_id == event.device_id
-    assert received_events[0].vendor == event.vendor
+    assert received_events[0].os == event.os
