@@ -10,6 +10,7 @@ from customercounter.electronic_device.state_machine import (
     IElectronicDevicePresenceMachine,
 )
 from customercounter.event.type import EventType
+from customercounter.operating_system import OperatingSystem
 
 
 class IElectronicDevice(ABC):
@@ -18,7 +19,7 @@ class IElectronicDevice(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    def get_vendor(self) -> str:
+    def get_os(self) -> OperatingSystem:
         raise NotImplementedError()
 
     @abstractmethod
@@ -39,9 +40,9 @@ class IElectronicDevice(ABC):
 
 
 class ElectronicDevice(IElectronicDevice):
-    def __init__(self, device_id: str, vendor: str):
+    def __init__(self, device_id: str, os: OperatingSystem):
         self.__id = device_id
-        self.__vendor = vendor
+        self.__os = os
         self.__state: IElectronicDevicePresenceMachine = (
             ElectronicDevicePresenceMachine.build_default_machine()
         )
@@ -49,8 +50,8 @@ class ElectronicDevice(IElectronicDevice):
     def get_id(self) -> str:
         return self.__id
 
-    def get_vendor(self) -> str:
-        return self.__vendor
+    def get_os(self) -> OperatingSystem:
+        return self.__os
 
     def get_current_state(self) -> ElectronicDevicePresenceMachineState:
         return self.__state.get_current_state()
@@ -75,7 +76,7 @@ class ElectronicDevice(IElectronicDevice):
     ):
         current_timestamp = datetime.now()
         logger.info(
-            f"{self.__id} | {self.__vendor} | {old_state.value} --> {new_state.value} | {current_timestamp}"
+            f"{self.__id} | {self.__os.value} | {old_state.value} --> {new_state.value} | {current_timestamp}"
         )
 
     def get_in_mall_timestamps(self) -> typing.List[datetime]:

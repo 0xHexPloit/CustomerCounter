@@ -15,7 +15,7 @@ from customercounter.event.type import EventType
 from customercounter.thread import IThreadManager
 
 
-class IEventManager(IThreadManager):
+class IEventManager(IThreadManager, IElectronicDevicesStoreUpdateNotifier):
     ...
 
 
@@ -37,7 +37,7 @@ def thread_func(
             device = store.get_electronic_device(event.device_id)
 
             if device is None:
-                new_device = ElectronicDevice(event.device_id, event.vendor)
+                new_device = ElectronicDevice(event.device_id, event.os)
                 store.add_electronic_device(new_device)
                 seen_devices.add(new_device)
             else:
