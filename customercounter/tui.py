@@ -38,7 +38,7 @@ class CustomerCounterTUI(App):
         self.__manager.add_subscriber(self)
 
     def compose(self) -> ComposeResult:
-        header = widgets.Header(name="CustomerCounter")
+        header = widgets.Header(name="CustomerCounter", show_clock=True)
         header.tall = True
 
         yield header
