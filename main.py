@@ -3,12 +3,13 @@ from pathlib import Path
 import typer
 from loguru import logger
 
-from customercounter import start_probe_requests_listener
+from customercounter import run_program
 
 
 def main(interface: str, logs_out: Path = "./out/logs.txt"):
+    logger.remove()
     logger.add(logs_out, diagnose=False, backtrace=False)
-    start_probe_requests_listener(interface)
+    run_program(interface)
 
 
 if __name__ == "__main__":

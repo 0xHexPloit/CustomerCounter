@@ -122,14 +122,14 @@ class CustomerCounterTUI(App):
             CURRENT_SHOPPERS_MESSAGE.format(current_number_shoppers)
         )
 
-        total_devices = len(devices)
-        os_label.update(
-            OS_DEVICE_MESSAGE.format(
-                round(apple_devices / total_devices, 2) * 100,
-                round(android_devices / total_devices, 2) * 100,
-                round(other_devices / total_devices, 2) * 100,
+        if current_number_shoppers != 0:
+            os_label.update(
+                OS_DEVICE_MESSAGE.format(
+                    round(apple_devices / current_number_shoppers, 2) * 100,
+                    round(android_devices / current_number_shoppers, 2) * 100,
+                    round(other_devices / current_number_shoppers, 2) * 100,
+                )
             )
-        )
 
         total_shoppers_label.update(
             TOTAL_SHOPPERS_MESSAGE.format(total_number_shoppers)
