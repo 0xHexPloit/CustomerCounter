@@ -1,8 +1,0 @@
-2023-06-16 00:11:41.651 | INFO     | customercounter.network.sniffer:start_probe_requests_listener:47 - Starting listening for packets on interface: wlx00c0cab03bb5 !
-2023-06-16 00:12:30.585 | INFO     | customercounter.network.sniffer:start_probe_requests_listener:47 - Starting listening for packets on interface: wlx00c0cab03bb5 !
-2023-06-16 11:00:25.756 | INFO     | customercounter.event.collector:thread_func:24 - HELLO FROM COLLECTOR
-2023-06-16 11:00:25.757 | INFO     | customercounter.network.sniffer:start_probe_requests_listener:48 - Starting listening for packets on interface: wlx00c0cab03bb5 !
-2023-06-16 11:00:25.757 | INFO     | customercounter.event.collector:thread_func:28 - HELLO FROM COLLECTOR
-2023-06-16 11:00:25.757 | INFO     | customercounter.event.collector:thread_func:29 - []
-2023-06-16 11:00:25.758 | INFO     | customercounter.event.manager:thread_func:33 - I Have been called!
-2023-06-16 11:00:25.758 | INFO     | customercounter.event.manager:thread_func:34 - []
