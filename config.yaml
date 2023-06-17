@@ -1,4 +1,4 @@
 smachine:
-    plattempts: 2
+    plattempts: 4
 collector:
-    interval: 120
+    interval: 30
