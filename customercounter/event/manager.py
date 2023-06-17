@@ -42,7 +42,7 @@ def thread_func(
                 seen_devices.add(new_device)
             else:
                 # If device already exists, we simply need to update its state
-                device.update_device_state(EventType.PROBE_REQUEST_RECEIVED)
+                device.update_device_state(EventType.EVENT_RECEIVED)
                 seen_devices.add(device)
 
         # Next step we should retrieve all the devices that we have not seen previously and update their state
@@ -52,7 +52,7 @@ def thread_func(
         not_seen_devices = all_devices_in_storage.difference(seen_devices)
 
         for device in not_seen_devices:
-            device.update_device_state(EventType.NO_PROBE_REQUEST_RECEIVED)
+            device.update_device_state(EventType.NO_EVENT_RECEIVED)
 
         # Notifying about store changes
         store_update_delegate.notify_store_update()

@@ -35,17 +35,17 @@ def test_should_get_correct_initial_state():
     )
 
 
-def test_should_move_to_in_mall_state_when_dealing_with_received_probe_request_event():
+def test_should_move_to_in_mall_state_when_dealing_with_event_received():
     device = ElectronicDevice("", DEFAULT_OS)
-    device.update_device_state(EventType.PROBE_REQUEST_RECEIVED)
+    device.update_device_state(EventType.EVENT_RECEIVED)
     new_state = device.get_current_state()
 
     assert new_state == ElectronicDevicePresenceMachineState.IN_MALL
 
 
-def test_should_move_to_false_positive_when_dealing_with_no_probe_request_received_event():
+def test_should_move_to_false_positive_when_dealing_with_no_event_received():
     device = ElectronicDevice("", DEFAULT_OS)
-    device.update_device_state(EventType.NO_PROBE_REQUEST_RECEIVED)
+    device.update_device_state(EventType.NO_EVENT_RECEIVED)
     new_state = device.get_current_state()
 
     assert new_state == ElectronicDevicePresenceMachineState.FALSE_POSITIVE
@@ -56,7 +56,7 @@ def test_should_log_state_transition_when_moving_from_one_state_to_another():
     handle_id = logger.add(buffer)
 
     device = ElectronicDevice(DEFAULT_DEVICE_ID, DEFAULT_OS)
-    device.update_device_state(EventType.PROBE_REQUEST_RECEIVED)
+    device.update_device_state(EventType.EVENT_RECEIVED)
 
     log = buffer.getvalue().strip("\n")
     log_items = log.split("|")[2:]
@@ -86,8 +86,8 @@ def test_should_not_log_state_transition_if_staying_in_same_state():
     handle_id = logger.add(buffer)
 
     device = ElectronicDevice("", OperatingSystem.OTHER)
-    device.update_device_state(EventType.PROBE_REQUEST_RECEIVED)
-    device.update_device_state(EventType.PROBE_REQUEST_RECEIVED)
+    device.update_device_state(EventType.EVENT_RECEIVED)
+    device.update_device_state(EventType.EVENT_RECEIVED)
 
     logs = [item for item in buffer.getvalue().split("\n") if item != ""]
 
@@ -98,7 +98,7 @@ def test_should_not_log_state_transition_if_staying_in_same_state():
 
 def test_should_get_a_timestamp_when_moving_from_potential_arrival_to_in_mall():
     device = ElectronicDevice("", OperatingSystem.OTHER)
-    device.update_device_state(EventType.PROBE_REQUEST_RECEIVED)
+    device.update_device_state(EventType.EVENT_RECEIVED)
     timestamps = device.get_in_mall_timestamps()
 
     assert len(timestamps) == 1
@@ -106,12 +106,12 @@ def test_should_get_a_timestamp_when_moving_from_potential_arrival_to_in_mall():
 
 def test_should_get_a_timestamp_when_moving_from_potential_leaving_to_left():
     device = ElectronicDevice("", OperatingSystem.OTHER)
-    device.update_device_state(EventType.PROBE_REQUEST_RECEIVED)
+    device.update_device_state(EventType.EVENT_RECEIVED)
 
     settings = get_app_settings()
 
     for i in range(settings.smachine.plattempts + 2):
-        device.update_device_state(EventType.NO_PROBE_REQUEST_RECEIVED)
+        device.update_device_state(EventType.NO_EVENT_RECEIVED)
 
     timestamps = device.get_left_timestamps()
 

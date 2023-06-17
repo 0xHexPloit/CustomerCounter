@@ -45,10 +45,10 @@ class IElectronicDevicePresenceMachine(typing.Protocol):
     def get_remaining_potential_leaving_attempts(self) -> int:
         ...
 
-    def probe_request_received(self):
+    def event_received(self):
         ...
 
-    def no_probe_request_received(self):
+    def no_event_received(self):
         ...
 
     def get_current_state(self) -> ElectronicDevicePresenceMachineState:
@@ -62,7 +62,7 @@ class ElectronicDevicePresenceMachine(StateMachine):
     potential_leaving = State()
     left = State()
 
-    probe_request_received = (
+    event_received = (
         potential_arrival.to(in_mall, on="_add_in_mall_timestamp")
         | potential_leaving.to(
             in_mall, on="_reset_remaining_potential_leaving_attempts"
@@ -72,7 +72,7 @@ class ElectronicDevicePresenceMachine(StateMachine):
         | in_mall.to(in_mall)
     )
 
-    no_probe_request_received = (
+    no_event_received = (
         potential_arrival.to(false_positive)
         | in_mall.to(potential_leaving)
         | potential_leaving.to(
