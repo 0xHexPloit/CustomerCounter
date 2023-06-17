@@ -5,19 +5,18 @@ repos:
             -   id: check-yaml
     -   repo: local
         hooks:
-            -   id: formatter
-                name: formatter
-                entry: bash -c "black customercounter/"
+            -   id: reorder-python-imports
+                name: reorder-python-imports
+                entry: bash -c 'isort --profile black customercounter/ tests/'
                 language: system
                 fail_fast: True
     -   repo: local
         hooks:
-            -   id: reorder-python-imports
-                name: reorder-python-imports
-                entry: bash -c 'isort customercounter/'
+            -   id: formatter
+                name: formatter
+                entry: bash -c "black customercounter/ tests/"
                 language: system
                 fail_fast: True
-    
     -   repo: local
         hooks:
             -   id: mypy-checker
