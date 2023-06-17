@@ -1,4 +1,4 @@
-FROM python:3.9.0
+FROM python:3.9.10
 
 RUN mkdir /app
 COPY /customercounter /app/customercounter
