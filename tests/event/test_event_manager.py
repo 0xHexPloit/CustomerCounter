@@ -70,7 +70,7 @@ def test_should_add_event_in_store_if_it_is_not_already_stored(event):
     assert store_size == 1
 
 
-def test_should_send_probe_request_received_event_if_device_id_is_in_event_channel(
+def test_should_send_event_received_event_if_device_id_is_in_event_channel(
     event: Event,
 ):
     store = ElectronicDevicesStore()
@@ -87,7 +87,7 @@ def test_should_send_probe_request_received_event_if_device_id_is_in_event_chann
     assert device_state == ElectronicDevicePresenceMachineState.IN_MALL
 
 
-def test_should_no_probe_request_received_event_id_device_id_is_not_in_event_channel(
+def test_should_no_event_received_event_id_device_id_is_not_in_event_channel(
     event: Event,
 ):
     store = ElectronicDevicesStore()

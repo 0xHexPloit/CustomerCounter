@@ -59,10 +59,10 @@ class ElectronicDevice(IElectronicDevice):
     def update_device_state(self, event_type: EventType):
         old_state = self.get_current_state()
 
-        if event_type == EventType.PROBE_REQUEST_RECEIVED:
-            self.__state.probe_request_received()
+        if event_type == EventType.EVENT_RECEIVED:
+            self.__state.event_received()
         else:
-            self.__state.no_probe_request_received()
+            self.__state.no_event_received()
 
         new_state = self.get_current_state()
 

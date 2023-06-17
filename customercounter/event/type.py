@@ -2,5 +2,5 @@ from enum import Enum, auto
 
 
 class EventType(Enum):
-    PROBE_REQUEST_RECEIVED = auto()
-    NO_PROBE_REQUEST_RECEIVED = auto()
+    EVENT_RECEIVED = auto()
+    NO_EVENT_RECEIVED = auto()
