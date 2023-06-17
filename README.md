@@ -37,6 +37,7 @@ Before running our program, make sure that your Wifi dongle is in `monitor` mode
 
 ```
 sudo iwconfig <interface> mode monitor
+
 ```
 
 Then to launch our TUI, execute the command:
