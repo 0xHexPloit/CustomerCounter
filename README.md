@@ -4,7 +4,7 @@ CustomerCounter is a Python program that attempts to count the current number of
 
 Some aditionnal information will be displayed on a TUI (Terminal User Interface) as shown below.
 
-![tui](https://github.com/0xHexPloit/CustomerCounter/blob/dev/assets/tui.png?raw=true)
+![tui](https://github.com/0xHexPloit/CustomerCounter/blob/master/assets/tui.png?raw=true)
 
 **Disclaimer: This project was developed as part of a school project. It is intended for educational use only.** 
 
