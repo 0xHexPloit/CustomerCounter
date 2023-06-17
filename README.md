@@ -36,11 +36,27 @@ docker build -t customercounter .
 Before running our program, make sure that your Wifi dongle is in `monitor` mode. To so do, you can execute the following command:
 
 ```
-sudo iwconfig <interface> set monitor
+sudo iwconfig <interface> mode monitor
+
 ```
 
 Then to launch our TUI, execute the command:
 
 ```
 docker run --rm -it --privileged --network="host" customercounter <interface>
+```
+
+Our reader should note that our program is customizable. As a matter of fact, you can change the time interval between
+two collect of events by giving a value to the `CCOUNTER_COLLECTER_INTERVAL` environment variable (default is 30s)
+
+```
+docker run --rm -it --privileged --network="host" -e "CCOUNTER_COLLECTER_INTERVAL=5" customercounter <interface>
+```
+
+It is also possible to change the number of attempts an electronic device can stay in the `potential leaving` state 
+before moving to the `exit` state. To do so, one must specify a value for the `CCOUNTER_SMACHINE_PLATTEMPS` environment
+variable.
+
+```
+docker run --rm -it --privileged --network="host" -e "CCOUNTER_SMACHINE_PLATTEMPTS=2" customercounter <interface>
 ```
