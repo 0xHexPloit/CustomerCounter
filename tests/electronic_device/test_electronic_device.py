@@ -116,3 +116,11 @@ def test_should_get_a_timestamp_when_moving_from_potential_leaving_to_left():
     timestamps = device.get_left_timestamps()
 
     assert len(timestamps) == 1
+
+
+def test_should_be_able_to_change_the_os_of_the_device():
+    device = ElectronicDevice("", OperatingSystem.OTHER)
+    device.change_os(OperatingSystem.APPLE)
+    device_os = device.get_os()
+
+    assert device_os == OperatingSystem.APPLE
