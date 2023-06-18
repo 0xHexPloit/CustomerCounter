@@ -23,6 +23,10 @@ class IElectronicDevice(ABC):
         raise NotImplementedError()
 
     @abstractmethod
+    def change_os(self, new_os: OperatingSystem):
+        raise NotImplementedError()
+
+    @abstractmethod
     def get_current_state(self) -> ElectronicDevicePresenceMachineState:
         raise NotImplementedError()
 
@@ -52,6 +56,9 @@ class ElectronicDevice(IElectronicDevice):
 
     def get_os(self) -> OperatingSystem:
         return self.__os
+
+    def change_os(self, new_os: OperatingSystem):
+        self.__os = new_os
 
     def get_current_state(self) -> ElectronicDevicePresenceMachineState:
         return self.__state.get_current_state()
