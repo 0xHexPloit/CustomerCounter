@@ -43,6 +43,13 @@ def thread_func(
             else:
                 # If device already exists, we simply need to update its state
                 device.update_device_state(EventType.EVENT_RECEIVED)
+
+                # Checking if there is a change in os device
+                device_os = device.get_os()
+
+                if device_os != event.os:
+                    device.change_os(event.os)
+
                 seen_devices.add(device)
 
         # Next step we should retrieve all the devices that we have not seen previously and update their state
