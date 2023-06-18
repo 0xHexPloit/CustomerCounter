@@ -43,14 +43,14 @@ sudo iwconfig <interface> mode monitor
 Then to launch our TUI, execute the command:
 
 ```
-docker run --rm -it --privileged --network="host" customercounter <interface>
+docker run --rm -it --privileged --network="host" -v $(pwd)/out:/app/out customercounter <interface>
 ```
 
 Our reader should note that our program is customizable. As a matter of fact, you can change the time interval between
 two collect of events by giving a value to the `CCOUNTER_COLLECTER_INTERVAL` environment variable (default is 30s)
 
 ```
-docker run --rm -it --privileged --network="host" -e "CCOUNTER_COLLECTER_INTERVAL=5" customercounter <interface>
+docker run --rm -it --privileged --network="host" -e "CCOUNTER_COLLECTER_INTERVAL=5" -v $(pwd)/out:/app/out customercounter <interface>
 ```
 
 It is also possible to change the number of attempts an electronic device can stay in the `potential leaving` state 
@@ -58,5 +58,5 @@ before moving to the `exit` state. To do so, one must specify a value for the `C
 variable.
 
 ```
-docker run --rm -it --privileged --network="host" -e "CCOUNTER_SMACHINE_PLATTEMPTS=2" customercounter <interface>
+docker run --rm -it --privileged --network="host" -e "CCOUNTER_SMACHINE_PLATTEMPTS=2" -v $(pwd)/out:/app/out customercounter <interface>
 ```
