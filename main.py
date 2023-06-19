@@ -1,4 +1,5 @@
 import sys
+import os
 from pathlib import Path
 
 import typer
@@ -8,8 +9,7 @@ from customercounter import run_program
 
 
 def main(interface: str, logs_out: Path = "./out/logs.txt"):
-    sys.stderr = sys.stdout
-
+    sys.stderr = os.devnull
 
     logger.remove()
     logger.add(logs_out, diagnose=False, backtrace=False)
