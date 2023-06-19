@@ -1,4 +1,8 @@
+import logging
+
 from loguru import logger
+
+logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 from scapy.all import Packet, sniff
 from scapy.layers.dot11 import Dot11, Dot11ProbeReq
 
